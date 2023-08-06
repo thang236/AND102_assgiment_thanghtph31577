@@ -22,11 +22,12 @@ import java.util.ArrayList;
 
 
 public class QLSanPhamFragment extends Fragment implements SanPhamAdapter.ChucNanginterfaceSanPham {
-    FragmentQLSanrPhamBinding binding;
-    ArrayList<SanPhamModel> sanPhamModelArrayList;
-    SanPhamAdapter adapter;
-    SanPhamAdapter.ChucNanginterfaceSanPham chucNanginterfaceSanPham;
-    SanPhamDao sanPhamDao = new SanPhamDao(getContext());
+    private FragmentQLSanrPhamBinding binding;
+    private ArrayList<SanPhamModel> sanPhamModelArrayList;
+    private SanPhamAdapter adapter;
+    private SanPhamAdapter.ChucNanginterfaceSanPham chucNanginterfaceSanPham;
+    private SanPhamDao sanPhamDao;
+
 
 
 
@@ -40,21 +41,22 @@ public class QLSanPhamFragment extends Fragment implements SanPhamAdapter.ChucNa
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentQLSanrPhamBinding.inflate(inflater, container, false);
+        chucNanginterfaceSanPham = this;
+         sanPhamDao = new SanPhamDao(getContext());
+
         loadDataFromSQL();
         listener();
 
         // Inflate the layout for this fragment
 
 
-
         return binding.getRoot();
     }
     public void loadDataFromSQL() {
-        sanPhamModelArrayList = sanPhamDao.getListSP();
+        sanPhamModelArrayList = sanPhamDao.getListSanPham();
         Log.d("zzzzzzz", "loadDataFromSQL: " + sanPhamModelArrayList.size());
-//        ArrayList<SanPhamModel> abcd = new ArrayList<>();
-//        SanPhamModel obj = new SanPhamModel(1,"thang",1000, 10);
-//        abcd.add(obj);
+
+
         adapter = new SanPhamAdapter(getContext(), sanPhamModelArrayList, chucNanginterfaceSanPham);
         binding.rcv.setAdapter(adapter);
     }
@@ -69,20 +71,26 @@ public class QLSanPhamFragment extends Fragment implements SanPhamAdapter.ChucNa
 
 
     @Override
-    public void update(String id) {
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new SuaSanPhamFragment()).addToBackStack(null).commit();
+    public void update(int id) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", id);
+        SuaSanPhamFragment suaSanPhamFragment = new SuaSanPhamFragment();
+        suaSanPhamFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, suaSanPhamFragment).addToBackStack(null).commit();
+
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(int id) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Bạn có chắc muốn xóa không ?");
         builder.setPositiveButton("chắc chắn", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                sanPhamDao.removeSP(id);
                 Toast.makeText(getContext(), "Xoá thành công", Toast.LENGTH_SHORT).show();
+                loadDataFromSQL();
                 dialogInterface.dismiss();
-
             }
         });
         builder.setNegativeButton("không", new DialogInterface.OnClickListener() {
@@ -101,8 +109,9 @@ public class QLSanPhamFragment extends Fragment implements SanPhamAdapter.ChucNa
     }
 
     @Override
-    public void xemChiTiet(String id) {
+    public void xemChiTiet(int id) {
         Toast.makeText(getContext(), "tính năng đang được phát triển", Toast.LENGTH_SHORT).show();
-
     }
+
+
 }

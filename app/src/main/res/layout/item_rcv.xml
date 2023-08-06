@@ -10,8 +10,9 @@
     android:layout_height="60sp"
     android:src="@drawable/anh2"
     />
+
     <TextView
-        android:id="@+id/tenSP"
+        android:id="@+id/tv_tenSP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ten san pham"
@@ -23,7 +24,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_toRightOf="@id/image"
-        android:layout_below="@id/tenSP">
+        android:layout_below="@id/tv_tenSP">
         <TextView
             android:id="@+id/tv_giaBan"
             android:layout_width="wrap_content"

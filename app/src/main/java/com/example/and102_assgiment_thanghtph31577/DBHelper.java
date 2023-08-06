@@ -8,38 +8,29 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {
-        super(context, "ASMDatabase", null, 1);
+        super(context, "asm", null, 1);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        //add table
-        String nguoiDung = "CREATE TABLE NguoiDung(tendangnhap TEXT PRIMARY KEY, "+
-                "matkhau TEXT, hoten TEXT)";
-        sqLiteDatabase.execSQL(nguoiDung);
+    public void onCreate(SQLiteDatabase db) {
+        String qND = "create table NguoiDung(tendangnhap text primary key, matkhau text, hoten text)";
+        db.execSQL(qND);
 
-        String sanPham = "CREATE TABLE SanPham(masp INTEGER PRIMARY KEY AUTOINCREMENT, "+
-                "tensp TEXT, giaban DOUBLE,soluong INTEGER )";
-        sqLiteDatabase.execSQL(sanPham);
+        String qSP = "create table SanPham(masp integer primary key autoincrement," +
+                "tensp text, giaban integer, soluong integer)";
+        db.execSQL(qSP);
 
-        //add data
-        String dataNguoiDung = "INSERT INTO NguoiDung VALUES ('admin', '123456', 'ADMIN')";
-        sqLiteDatabase.execSQL(dataNguoiDung);
-        String dataSanPham = "INSERT INTO SanPham VALUES ('banh quy', 3000.0, 5)";
-        sqLiteDatabase.execSQL(dataSanPham);
-
-
-
-
+        //Nạp dữ liệu cho table Products
+        String data = "insert into SanPham values(1,'Bánh quy bơ LU Pháp',45000,10)," +
+                "(2,'Snack mực lăn muối ớt',8000,52),(3,'Snack khoai tây Lays',12000,38)," +
+                "(4,'Bánh gạo One One',30000,11),(5,'Kẹo sữa Chocolate',25000,30)";
+        db.execSQL(data);
 
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        if (i != i1) {
-            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS NguoiDung");
-            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS SanPham");
-            onCreate(sqLiteDatabase);
-        }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("drop table if exists NguoiDung");
+        db.execSQL("drop table if exists SanPham");
     }
 }

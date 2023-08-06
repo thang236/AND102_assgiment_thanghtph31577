@@ -3,13 +3,13 @@ package com.example.and102_assgiment_thanghtph31577;
 public class SanPhamModel {
     private  int masp;
     private  String tensp;
-    private  double giaban;
+    private  int giaban;
     private int soluong;
 
     public SanPhamModel() {
     }
 
-    public SanPhamModel(int masp, String tensp, double giaban, int soluong) {
+    public SanPhamModel(int masp, String tensp, int giaban, int soluong) {
         this.masp = masp;
         this.tensp = tensp;
         this.giaban = giaban;
@@ -32,11 +32,11 @@ public class SanPhamModel {
         this.tensp = tensp;
     }
 
-    public double getGiaban() {
+    public int getGiaban() {
         return giaban;
     }
 
-    public void setGiaban(double giaban) {
+    public void setGiaban(int giaban) {
         this.giaban = giaban;
     }
 

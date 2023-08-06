@@ -27,9 +27,9 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
         this.chucNanginterfaceSanPham = chucNanginterfaceSanPham;
     }
     public interface ChucNanginterfaceSanPham {
-        void update(String id);
-        void delete(String id);
-        void xemChiTiet(String id);
+        void update(int id);
+        void delete(int id);
+        void xemChiTiet(int id);
     }
 
     @NonNull
@@ -42,6 +42,8 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull SanPhamAdapter.ViewHolder holder, int position) {
     SanPhamModel object = sanPhamModelArrayList.get(position);
+
+    holder.binding.tvTenSP.setText(object.getTensp());
     holder.binding.tvGiaBan.setText("" + object.getGiaban());
     holder.binding.tvSoLuong.setText("" + object.getSoluong());
     holder.binding.btnLuaChon.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +78,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
         binding.btnSua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chucNanginterfaceSanPham.update(object.getTensp());
+                chucNanginterfaceSanPham.update(object.getMasp());
                 dialog.dismiss();
 
             }
@@ -84,14 +86,14 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
         binding.btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chucNanginterfaceSanPham.delete(object.getTensp());
+                chucNanginterfaceSanPham.delete(object.getMasp());
                 dialog.dismiss();
             }
         });
         binding.btnXemchiTiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chucNanginterfaceSanPham.xemChiTiet(object.getTensp());
+                chucNanginterfaceSanPham.xemChiTiet(object.getMasp());
                 dialog.dismiss();
 
             }

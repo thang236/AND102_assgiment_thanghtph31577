@@ -53,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
                     setTitle("Giới thiệu");
                     fragment = new GioiThieuFragment();
                 }else if (item.getItemId() == R.id.caiDat){
-                    setTitle("Cài đặt");
+                    setTitle("Quản lý sản phẩm");
                     fragment = new CaiDatFragment();
                 }else {
                     Toast.makeText(getApplicationContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
                 }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragment).commit();
                 binding.drawerLayout.close();
                 return true;
             }
